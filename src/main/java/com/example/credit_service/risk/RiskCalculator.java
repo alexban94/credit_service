@@ -13,6 +13,6 @@ public class RiskCalculator {
 
     //approve if score is below 50. need to test where risk values normally fall.
     public String decision(int score){
-        return score <= 50 ? "APPROVED" : "DENIED" ;
+        return score <= 70 ? "APPROVED" : "DENIED" ;
     }
 }
