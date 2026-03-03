@@ -6,12 +6,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-// Centralized error handling with @ControllerAdvice.
+// Centralized error handling with @ControllerAdvice. Tells Spring that this class should apply to all controllers
+// in the application. Without it would need try/catch inside every controller method.
 @ControllerAdvice
 class GlobalExceptionHandler {
     //TODO: test this.
+    // @ExceptionHandler with the class file makes Spring call this method any time this class of exception is thrown.
     @ExceptionHandler(ApplicationNotFoundException.class)
-    public ResponseEntity<String> handleNotFound(ApplicationNotFoundException ex){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    public ResponseEntity<String> handleApplicationNotFound(ApplicationNotFoundException e){
+        // ResponseEntity is a Spring class that represents an entire HTTP response - can control status code/headers/body.
+        // ResponseEntity<T> where T is the body.
+        // HttpStatus status and error code, HttpHeaders headers.
+        // status is a static factory method that returns a builder object (refer to builder design pattern). .body creates and returns the actual ResponseEntity object.
+        // HttpStatus enum class containing status code/messages.
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // e.getMessage() retrieves the application ID and error message from the custom exception class.
     }
 }
