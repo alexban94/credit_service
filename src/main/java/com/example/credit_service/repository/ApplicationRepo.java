@@ -10,5 +10,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 // @Repository is still needed when you need full control over queries and need to do complex joins/aggregations.
 // Note that Repository the created object does not store data itself but acts as a gateway/access layer to a real database.
 public interface ApplicationRepo extends MongoRepository<CustomerApplication, String> {
-
+    //TODO: review MongoRepository documentation
 }

@@ -2,6 +2,8 @@ package com.example.credit_service.risk;
 
 import org.springframework.stereotype.Component;
 
+//TODO: replace basic risk with more realistic algorithm based on a proposal and credit bureau response.
+
 // Managed by Spring. @Component is the class-level annotation.
 @Component
 public class RiskCalculator {
