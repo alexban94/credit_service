@@ -2,6 +2,7 @@ package com.example.credit_service.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,11 +21,13 @@ class SecurityConfig {
     // This method is to define one of these filters.
     // DI again, Spring will look in the ApplicationContext when it tries to create the bean and provide a HttpSecurity
     // object automatically as it's a complex class that needs wiring. The class is a Builder for the SecurityFilterChain.
-
     @Bean
-    SecurityFilterChain filter(HttpSecurity http) throws Exception {  //the build function ot be used throws an exception so throw it again
-        // this differs from the global exception handler as this is done only at start up before any request is processed
-        // and is Spring config, not business logic or error due to APIs.
-        return null;
+    SecurityFilterChain filter(HttpSecurity http){
+        // Start configuration.
+        http.csrf(crsf -> crsf.disable()) // Cross-site Request Forgery protection. disable as it's a REST API not using sessions or cookeis.
+            .authorizeHttpRequests(auth -> auth.anyRequest().authenticated()) //Every HTTP request must be authenticated. No anonymous access.
+            .httpBasic(Customizer.withDefaults()); // Basic authentication; username and password. Spring to decode and validate + allow/deny.
+
+        return http.build(); // build the SecurityFilterChain configured in the method. Spring will register it and apply it to all incoming requests.
     }
 }
