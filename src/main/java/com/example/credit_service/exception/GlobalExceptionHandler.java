@@ -2,7 +2,7 @@ package com.example.credit_service.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -21,4 +21,12 @@ class GlobalExceptionHandler {
         // HttpStatus enum class containing status code/messages.
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // e.getMessage() retrieves the application ID and error message from the custom exception class.
     }
+
+    // THis kind of error gets thrown when @Valid on @ResponseBody fails.
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationError(MethodArgumentNotValidException e){
+        //TODO: add logic to precisely format response to show which fields failed validation.
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
 }

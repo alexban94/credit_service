@@ -3,6 +3,7 @@ package com.example.credit_service.controller;
 import com.example.credit_service.dto.CreditRequest;
 import com.example.credit_service.dto.CreditResponse;
 import com.example.credit_service.service.CreditApplicationService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 /* RestController is essentially a combination of @Controller (handles web requests) and @ResponseBody (return values
@@ -24,10 +25,11 @@ public class CreditApplicationController {
 
     // @PostMapping registers this method as a handler and POST requests get routed here, gets invoked when the path matches.
     @PostMapping
-    public CreditResponse submit(@RequestBody CreditRequest request){
+    public CreditResponse submit(@Valid @RequestBody CreditRequest request){
         // @RequestBody means it contains JSON and to convert it into a Java object. Spring reads HTTP request body and
         // uses a JSON converter (Jackson). Deserializes JSON into the object type specified (DTO) to pass into the method.
         // If JSON is invalid then it's a 400 error, bad request.
+        // @Valid will also apply the validation rules defined in the DTO e.g. @NotBlank
         return service.submitApplication(request);
     }
 
