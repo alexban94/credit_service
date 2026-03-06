@@ -1,6 +1,6 @@
 package com.example.credit_service.service;
 
-import com.example.credit_service.domain.CustomerApplication;
+import com.example.credit_service.model.CustomerApplication;
 import com.example.credit_service.dto.CreditRequest;
 import com.example.credit_service.dto.CreditResponse;
 import com.example.credit_service.exception.ApplicationNotFoundException;
