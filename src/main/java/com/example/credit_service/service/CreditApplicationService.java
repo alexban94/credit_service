@@ -5,6 +5,7 @@ import com.example.credit_service.dto.CreditRequest;
 import com.example.credit_service.dto.CreditResponse;
 import com.example.credit_service.exception.ApplicationNotFoundException;
 import com.example.credit_service.repository.ApplicationRepo;
+import com.example.credit_service.repository.EventRepo;
 import com.example.credit_service.risk.RiskCalculator;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +14,15 @@ import org.springframework.stereotype.Service;
 public class CreditApplicationService {
 
     private final RiskCalculator calc;
-    private final ApplicationRepo repo;
+    private final ApplicationRepo appRepo;
+    private final EventRepo eventRepo;
 
     //Dependency Injection of shared objects.
-    public CreditApplicationService(RiskCalculator calc, ApplicationRepo repo){
-        this.repo = repo;
+    public CreditApplicationService(RiskCalculator calc, ApplicationRepo appRepo, EventRepo eventRepo){
+        this.appRepo = appRepo;
         this.calc = calc;
+        this.eventRepo = eventRepo;
+
     }
 
     //Called from the CreditApplicationController (REST API) to handle logic
@@ -34,7 +38,9 @@ public class CreditApplicationService {
         // Save in MongoDB. Use new variable to indicate it's the persisted version of object used with MongoDB.
         // Rule of thumb is to treat a save() function as returning the authorative persisted state. depending on
         // implementation it could mutate the original object or return a new instance.
-        CustomerApplication saved = repo.save(app);
+        CustomerApplication saved = appRepo.save(app);
+        //TODO: modify this to also save the event.
+
 
         //Return the DTO CreditResponse (for when its called by the controller for a POST request).
         return new CreditResponse(saved.getId(), saved.getDecision(), saved.getRiskScore());
@@ -42,7 +48,7 @@ public class CreditApplicationService {
 
     public CreditResponse getApplication(String id){
         //Lambda expression to throw a new ApplicationNotFound exception if the application id does not exist in MongoDB.
-        CustomerApplication app = repo.findById(id).orElseThrow(()-> new ApplicationNotFoundException(id));
+        CustomerApplication app = appRepo.findById(id).orElseThrow(()-> new ApplicationNotFoundException(id));
 
         //If application is found then return it.
         return new CreditResponse(app.getId(), app.getDecision(), app.getRiskScore());
