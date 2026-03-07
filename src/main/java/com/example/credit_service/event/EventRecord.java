@@ -10,6 +10,7 @@ public record EventRecord(
         String lastName,
         String employer,
         int riskScore,
-        int salary
+        int salary,
+        String decision
 ) {
 }

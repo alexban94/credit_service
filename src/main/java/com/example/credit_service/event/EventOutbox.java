@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 // Class to represent the kafka event with the Outbox pattern to ensure no events are lost.
+// i.e. a wrapper used to store events safely in MongoDB.
 @Getter
 @Setter
 @AllArgsConstructor
