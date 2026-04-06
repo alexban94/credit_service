@@ -1,4 +1,4 @@
-package com.example.credit_service.event;
+package com.example.credit_service.common.event;
 
 import java.util.UUID;
 

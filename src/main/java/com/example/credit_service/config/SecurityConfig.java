@@ -1,4 +1,4 @@
-package com.example.credit_service.security;
+package com.example.credit_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

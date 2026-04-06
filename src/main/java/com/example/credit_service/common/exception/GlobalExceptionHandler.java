@@ -1,4 +1,4 @@
-package com.example.credit_service.exception;
+package com.example.credit_service.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

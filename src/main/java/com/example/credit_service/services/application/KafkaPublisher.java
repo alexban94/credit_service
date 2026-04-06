@@ -1,12 +1,12 @@
-package com.example.credit_service.event;
+package com.example.credit_service.services.application;
 
-import com.example.credit_service.repository.EventRepo;
+import com.example.credit_service.event.EventOutbox;
+import com.example.credit_service.event.EventRepo;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 //TODO: set up Kafka/MongoDB in Docker. Write JUnit tests to see if it works as intended.
 // fix bug to resolve KafkaTemplate injection - no @Bean found.

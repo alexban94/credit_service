@@ -1,6 +1,5 @@
-package com.example.credit_service.repository;
+package com.example.credit_service.event;
 
-import com.example.credit_service.event.EventOutbox;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.credit_service.model;
+package com.example.credit_service.services.application.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

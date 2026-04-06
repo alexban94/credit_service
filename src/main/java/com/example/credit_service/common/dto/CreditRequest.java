@@ -1,4 +1,4 @@
-package com.example.credit_service.dto;
+package com.example.credit_service.common.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

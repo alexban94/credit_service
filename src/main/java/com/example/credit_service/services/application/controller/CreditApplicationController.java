@@ -1,8 +1,8 @@
-package com.example.credit_service.controller;
+package com.example.credit_service.services.application.controller;
 
-import com.example.credit_service.dto.CreditRequest;
-import com.example.credit_service.dto.CreditResponse;
-import com.example.credit_service.service.CreditApplicationService;
+import com.example.credit_service.common.dto.CreditRequest;
+import com.example.credit_service.common.dto.CreditResponse;
+import com.example.credit_service.services.application.service.CreditApplicationService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 

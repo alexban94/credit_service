@@ -1,6 +1,6 @@
-package com.example.credit_service.repository;
+package com.example.credit_service.services.application.repository;
 
-import com.example.credit_service.model.CustomerApplication;
+import com.example.credit_service.services.application.model.CustomerApplication;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 // Using an interface is the new best practice with using Spring Data. Previously you would use @Repository

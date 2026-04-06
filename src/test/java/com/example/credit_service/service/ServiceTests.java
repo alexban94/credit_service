@@ -1,12 +1,13 @@
 package com.example.credit_service.service;
 
-import com.example.credit_service.dto.CreditRequest;
-import com.example.credit_service.dto.CreditResponse;
-import com.example.credit_service.exception.ApplicationNotFoundException;
-import com.example.credit_service.model.CustomerApplication;
-import com.example.credit_service.repository.ApplicationRepo;
-import com.example.credit_service.repository.EventRepo;
-import com.example.credit_service.risk.RiskCalculator;
+import com.example.credit_service.services.application.service.CreditApplicationService;
+import com.example.credit_service.common.dto.CreditRequest;
+import com.example.credit_service.common.dto.CreditResponse;
+import com.example.credit_service.common.exception.ApplicationNotFoundException;
+import com.example.credit_service.services.application.model.CustomerApplication;
+import com.example.credit_service.services.application.repository.ApplicationRepo;
+import com.example.credit_service.event.EventRepo;
+import com.example.credit_service.services.risk.RiskCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

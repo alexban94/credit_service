@@ -1,4 +1,4 @@
-package com.example.credit_service.dto;
+package com.example.credit_service.common.dto;
 
 public record CreditResponse(
         String appID, //uniqueID for the application

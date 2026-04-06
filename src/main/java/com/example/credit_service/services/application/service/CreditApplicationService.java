@@ -1,14 +1,14 @@
-package com.example.credit_service.service;
+package com.example.credit_service.services.application.service;
 
 import com.example.credit_service.event.EventOutbox;
-import com.example.credit_service.event.EventRecord;
-import com.example.credit_service.model.CustomerApplication;
-import com.example.credit_service.dto.CreditRequest;
-import com.example.credit_service.dto.CreditResponse;
-import com.example.credit_service.exception.ApplicationNotFoundException;
-import com.example.credit_service.repository.ApplicationRepo;
-import com.example.credit_service.repository.EventRepo;
-import com.example.credit_service.risk.RiskCalculator;
+import com.example.credit_service.common.event.EventRecord;
+import com.example.credit_service.services.application.model.CustomerApplication;
+import com.example.credit_service.common.dto.CreditRequest;
+import com.example.credit_service.common.dto.CreditResponse;
+import com.example.credit_service.common.exception.ApplicationNotFoundException;
+import com.example.credit_service.services.application.repository.ApplicationRepo;
+import com.example.credit_service.event.EventRepo;
+import com.example.credit_service.services.risk.RiskCalculator;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 

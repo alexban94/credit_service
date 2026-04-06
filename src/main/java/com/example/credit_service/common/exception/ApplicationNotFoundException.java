@@ -1,4 +1,4 @@
-package com.example.credit_service.exception;
+package com.example.credit_service.common.exception;
 
 // RuntimeException (unchecked) and does not require 'throws' in method signatures.
 // If the service throws this error it will propagate up the call stack until something handles it, in this case Spring
