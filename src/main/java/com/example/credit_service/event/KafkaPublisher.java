@@ -1,7 +1,5 @@
-package com.example.credit_service.services.application;
+package com.example.credit_service.event;
 
-import com.example.credit_service.event.EventOutbox;
-import com.example.credit_service.event.EventRepo;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

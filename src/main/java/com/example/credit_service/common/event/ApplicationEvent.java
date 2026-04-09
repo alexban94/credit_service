@@ -2,15 +2,14 @@ package com.example.credit_service.common.event;
 
 import java.util.UUID;
 
-// TODO: Remove this later; Record class to represent the Event as immutable inside the application.
-public record EventRecord(
+// Event produced after application is submitted and saved in application module.
+public record ApplicationEvent(
         UUID eventID,
         String appID,
         String firstName,
         String lastName,
         String employer,
-        int riskScore,
         int salary,
-        String decision
+        int requestedAmount
 ) {
 }

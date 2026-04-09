@@ -1,5 +1,7 @@
 package com.example.credit_service.services.application.service;
 
+import com.example.credit_service.common.event.ApplicationEvent;
+import com.example.credit_service.common.event.EventType;
 import com.example.credit_service.event.EventOutbox;
 import com.example.credit_service.common.event.EventRecord;
 import com.example.credit_service.services.application.model.CustomerApplication;
@@ -47,18 +49,17 @@ public class CreditApplicationService {
         // implementation it could mutate the original object or return a new instance.
         CustomerApplication saved = appRepo.save(app);
         // Create a new event - immutable business fact that the application has been saved.
-        EventRecord event = new EventRecord(
+        ApplicationEvent event = new ApplicationEvent(
                 UUID.randomUUID(),
                 saved.getId(),
                 saved.getFirstName(),
                 saved.getLastName(),
                 saved.getEmployer(),
-                saved.getRiskScore(),
                 saved.getAnnualIncome(),
-                saved.getDecision()
+                saved.getRequestAmount()
                 );
         String json = objectMapper.writeValueAsString(event); //convert event to json for mongoDB.
-        EventOutbox outbox = new EventOutbox(UUID.randomUUID(), "CreditApplicationSaved",
+        EventOutbox outbox = new EventOutbox(UUID.randomUUID(), EventType.APPLICATION.name(),
                 json, Instant.now(), false); // create outbox event for mongoDB. the record is the data/payload, this class is a 'wrapper' for it.
         eventRepo.save(outbox); // save it to the event repo.
         // now the application is saved and the event is saved so neither can be lost. this will be handled separately by kafka.
