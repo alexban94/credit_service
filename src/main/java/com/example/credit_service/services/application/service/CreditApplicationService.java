@@ -3,7 +3,6 @@ package com.example.credit_service.services.application.service;
 import com.example.credit_service.common.event.ApplicationEvent;
 import com.example.credit_service.common.event.EventType;
 import com.example.credit_service.event.EventOutbox;
-import com.example.credit_service.common.event.EventRecord;
 import com.example.credit_service.services.application.model.CustomerApplication;
 import com.example.credit_service.common.dto.CreditRequest;
 import com.example.credit_service.common.dto.CreditResponse;
@@ -60,9 +59,9 @@ public class CreditApplicationService {
                 );
         String json = objectMapper.writeValueAsString(event); //convert event to json for mongoDB.
         EventOutbox outbox = new EventOutbox(UUID.randomUUID(), EventType.APPLICATION.name(),
-                json, Instant.now(), false); // create outbox event for mongoDB. the record is the data/payload, this class is a 'wrapper' for it.
+                json, event.appID() ,Instant.now(), false); // create outbox event for mongoDB. the record is the data/payload, this class is a 'wrapper' for it.
         eventRepo.save(outbox); // save it to the event repo.
-        // now the application is saved and the event is saved so neither can be lost. this will be handled separately by kafka.
+        // now the application is saved and the event is saved so neither can be lost. this will be handled separately by the kafkaPublisher.
 
 
 

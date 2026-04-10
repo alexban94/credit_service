@@ -29,7 +29,7 @@ public class KafkaPublisher {
         for(EventOutbox event: events) {
 
             // published on the topic "credit-application-events"
-            kafka.send("credit-application-events", event.getId().toString(), event.getData());
+            kafka.send("credit-application-events", event.getAppID(), event.getData());
             event.setProcessed(true); // event now published.
 
             // save event again.

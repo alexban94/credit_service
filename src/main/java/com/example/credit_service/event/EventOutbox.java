@@ -23,6 +23,8 @@ public class EventOutbox {
     private String eventType; //Type of event
     private String data; // actual event data as JSON.
 
+    private String appID; // to use as key when publishing the event via kafka.
+
     private Instant timestamp; //time created
 
     private boolean processed; //If event has been processed yet or not.
