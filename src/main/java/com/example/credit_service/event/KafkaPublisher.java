@@ -2,6 +2,7 @@ package com.example.credit_service.event;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 // fix bug to resolve KafkaTemplate injection - no @Bean found.
 // maybe to do with no Kafka broker active so the dependencies aren't created.
 // set this up with Docker and also try creating a mock one with JUnit tests.
-@Service
+@Component
 public class KafkaPublisher {
 
     private final EventRepo repo;
