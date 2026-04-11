@@ -2,14 +2,16 @@ package com.example.credit_service.services.application.service;
 
 import com.example.credit_service.common.event.ApplicationEvent;
 import com.example.credit_service.common.event.EventType;
-import com.example.credit_service.event.EventOutbox;
+import com.example.credit_service.event.OutboxEvent;
+import com.example.credit_service.services.application.model.ApplicationOutbox;
 import com.example.credit_service.services.application.model.CustomerApplication;
 import com.example.credit_service.common.dto.CreditRequest;
 import com.example.credit_service.common.dto.CreditResponse;
 import com.example.credit_service.common.exception.ApplicationNotFoundException;
+import com.example.credit_service.services.application.repository.ApplicationEventRepo;
 import com.example.credit_service.services.application.repository.ApplicationRepo;
 import com.example.credit_service.event.EventRepo;
-import com.example.credit_service.services.risk.RiskCalculator;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 
@@ -20,28 +22,23 @@ import java.util.UUID;
 @Service
 public class CreditApplicationService {
 
-    private final RiskCalculator calc;
     private final ApplicationRepo appRepo;
-    private final EventRepo eventRepo;
+    private final ApplicationEventRepo eventRepo;
     private final ObjectMapper objectMapper;
 
     //Dependency Injection of shared objects.
-    public CreditApplicationService(RiskCalculator calc, ApplicationRepo appRepo, EventRepo eventRepo, ObjectMapper objectMapper){
+    public CreditApplicationService(ApplicationRepo appRepo, ApplicationEventRepo eventRepo, ObjectMapper objectMapper){
         this.appRepo = appRepo;
-        this.calc = calc;
         this.eventRepo = eventRepo;
         this.objectMapper = objectMapper;
     }
 
     //Called from the CreditApplicationController (REST API) to handle logic
-    public CreditResponse submitApplication(CreditRequest request) {
-
-        int score = calc.calculateRiskScore(request.annualIncome(), request.requestAmount());
-        String decision = calc.decision(score);
+    public CreditResponse submitApplication(@NonNull CreditRequest request) {
 
         //ID is null as it will be created by MongoDB later. Create application model object.
         CustomerApplication app = new CustomerApplication(null, request.firstName(), request.lastName(),
-                request.employer(), request.requestAmount(), request.annualIncome(), score, decision);
+                request.employer(), request.requestAmount(), request.annualIncome(), 0, "PENDING");
 
         // Save in MongoDB. Use new variable to indicate it's the persisted version of object used with MongoDB.
         // Rule of thumb is to treat a save() function as returning the authorative persisted state. depending on
@@ -58,7 +55,7 @@ public class CreditApplicationService {
                 saved.getRequestAmount()
                 );
         String json = objectMapper.writeValueAsString(event); //convert event to json for mongoDB.
-        EventOutbox outbox = new EventOutbox(UUID.randomUUID(), EventType.APPLICATION.name(),
+        ApplicationOutbox outbox = new ApplicationOutbox(UUID.randomUUID(), EventType.APPLICATION.name(),
                 json, event.appID() ,Instant.now(), false); // create outbox event for mongoDB. the record is the data/payload, this class is a 'wrapper' for it.
         eventRepo.save(outbox); // save it to the event repo.
         // now the application is saved and the event is saved so neither can be lost. this will be handled separately by the kafkaPublisher.

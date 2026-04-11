@@ -2,6 +2,7 @@ package com.example.credit_service.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,9 +14,9 @@ import java.util.UUID;
 // i.e. a wrapper used to store events safely in MongoDB.
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-@Document(collection="events") // To be stored in separate 'events' collection.
-public class EventOutbox {
+public abstract class OutboxEvent {
 
     @Id
     private UUID id; //unique ID for the outbox event.
