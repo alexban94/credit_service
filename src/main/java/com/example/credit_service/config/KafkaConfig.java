@@ -25,27 +25,26 @@ public class KafkaConfig {
     @Bean
     public NewTopic riskTopic(KafkaTopics topics){
         return TopicBuilder
-                .name(topics.getRisk()) // topic name
-                .partitions(2) // allow parallel processing, kafka distrubutes messages across partitions, so multiple consumers can process events simultaneously.
-                .replicas(1) // for redundancy to protect agaisnt data loss; number of copies of each partition.
+                .name(topics.getRisk())
+                .partitions(2)
+                .replicas(1)
                 .build();
     }
 
     @Bean
     public NewTopic fraudTopic(KafkaTopics topics){
         return TopicBuilder
-                .name(topics.getFraud()) // topic name
-                .partitions(2) // allow parallel processing, kafka distrubutes messages across partitions, so multiple consumers can process events simultaneously.
-                .replicas(1) // for redundancy to protect agaisnt data loss; number of copies of each partition.
+                .name(topics.getFraud())
+                .partitions(2)
                 .build();
     }
 
     @Bean
     public NewTopic decisionTopic(KafkaTopics topics){
         return TopicBuilder
-                .name(topics.getDecision()) // topic name
-                .partitions(2) // allow parallel processing, kafka distrubutes messages across partitions, so multiple consumers can process events simultaneously.
-                .replicas(1) // for redundancy to protect agaisnt data loss; number of copies of each partition.
+                .name(topics.getDecision())
+                .partitions(2)
+                .replicas(1)
                 .build();
     }
 }

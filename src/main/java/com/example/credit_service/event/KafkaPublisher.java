@@ -2,6 +2,7 @@ package com.example.credit_service.event;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
@@ -12,16 +13,18 @@ import java.util.List;
 
 // Converted to be generic so a publisher can be created for each service - need one for each so they can be separated more easily lately
 // and can use the correct topic/repo for the service. T must extend OutboxEvent so it forces T to be a subclass that will have the correct methods.
-public abstract class KafkaPublisher<T extends OutboxEvent> {
+public class KafkaPublisher<T extends OutboxEvent> {
 
     private final EventRepo<T> repo;
     private final String topic;
     private final KafkaTemplate<String, String> kafka;
+    private final ObjectMapper objectMapper;
 
-    public KafkaPublisher(EventRepo<T> repo, KafkaTemplate<String, String> kafka, String topic){
+    public KafkaPublisher(EventRepo<T> repo, KafkaTemplate<String, String> kafka, String topic, ObjectMapper objectMapper){
         this.repo = repo;
         this.topic = topic;
         this.kafka = kafka;
+        this.objectMapper = objectMapper;
     }
     // Delay of 5 seconds after the previous execution completes.
     @Scheduled(fixedDelay = 5000)
@@ -32,7 +35,7 @@ public abstract class KafkaPublisher<T extends OutboxEvent> {
         for(T event: events) {
 
             // published on the topic "credit-application-events"
-            kafka.send(topic, event.getAppID(), event.getData());
+            kafka.send(topic, event.getAppID(), objectMapper.writeValueAsString(event));
             event.setProcessed(true); // event now published.
 
             // save event again.

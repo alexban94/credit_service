@@ -6,6 +6,7 @@ import java.util.UUID;
 public record RiskEvent(
     UUID eventID,
     String appID,
-    int riskScore
+    int riskScore,
+    String eventType
 ) {
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
 //@SuperBuilder //implement constructors that pass arguments superclass. Note inheritance does not inherit constructors so concrete implementation or using this to convert to a builder is necessary.
 public class ApplicationOutbox extends OutboxEvent {
 
-    public ApplicationOutbox(UUID id, String eventType, String data, String appID, Instant timestamp, boolean processed) {
-        super(id, eventType, data, appID, timestamp, processed);
+    public ApplicationOutbox(UUID id, String eventType, String payload, String appID, Instant timestamp, boolean processed) {
+        super(id, eventType, payload, appID, timestamp, processed);
     }
 }

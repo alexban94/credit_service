@@ -36,7 +36,7 @@ public class CreditApplicationService {
 
         //ID is null as it will be created by MongoDB later. Create application model object.
         CustomerApplication app = new CustomerApplication(null, request.firstName(), request.lastName(),
-                request.employer(), request.requestAmount(), request.annualIncome(), 0, "PENDING");
+                request.employer(), request.requestAmount(), request.annualIncome(), 0, "PENDING", false, false);
 
         // Save in MongoDB. Use new variable to indicate it's the persisted version of object used with MongoDB.
         // Rule of thumb is to treat a save() function as returning the authorative persisted state. depending on
@@ -50,10 +50,11 @@ public class CreditApplicationService {
                 saved.getLastName(),
                 saved.getEmployer(),
                 saved.getAnnualIncome(),
-                saved.getRequestAmount()
+                saved.getRequestAmount(),
+                EventType.NEW_APPLICATION.name()
                 );
         String json = objectMapper.writeValueAsString(event); //convert event to json for mongoDB.
-        ApplicationOutbox outbox = new ApplicationOutbox(UUID.randomUUID(), EventType.APPLICATION.name(),
+        ApplicationOutbox outbox = new ApplicationOutbox(UUID.randomUUID(), EventType.NEW_APPLICATION.name(),
                 json, event.appID() ,Instant.now(), false); // create outbox event for mongoDB. the record is the data/payload, this class is a 'wrapper' for it.
         eventRepo.save(outbox); // save it to the event repo.
         // now the application is saved and the event is saved so neither can be lost. this will be handled separately by the kafkaPublisher.

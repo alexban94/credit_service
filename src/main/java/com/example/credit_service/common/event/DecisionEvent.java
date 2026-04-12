@@ -6,6 +6,8 @@ public record DecisionEvent(
         UUID eventID,
         String appID,
         String decision,
-        int riskScore
+        int riskScore,
+        String eventType
+
 ) {
 }

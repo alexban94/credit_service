@@ -34,5 +34,8 @@ public class CustomerApplication {
     private int riskScore;
     private String decision;
 
+    // For checking completion status of application. When both are true can produce new event.
+    boolean decisionComplete;
+    boolean riskComplete;
 
 }

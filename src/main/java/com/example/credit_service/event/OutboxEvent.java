@@ -21,7 +21,7 @@ public abstract class OutboxEvent {
     private UUID id; //unique ID for the outbox event.
 
     private String eventType; //Type of event
-    private String data; // actual event data as JSON.
+    private String payload; // actual event data as JSON.
 
     private String appID; // to use as key when publishing the event via kafka.
 

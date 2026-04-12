@@ -10,6 +10,7 @@ public record ApplicationEvent(
         String lastName,
         String employer,
         int salary,
-        int requestedAmount
+        int requestedAmount,
+        String eventType
 ) {
 }
