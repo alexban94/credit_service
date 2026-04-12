@@ -12,8 +12,8 @@ import java.util.UUID;
 public interface EventRepo<T extends OutboxEvent> extends MongoRepository<T, UUID> {
     //TODO: test query for unprocessed events.
     // Spring generates implementation of interface at runtime.
-    // IT aslso provides implemntation for save(), findById(), delete() etc.
-    // it also implents this method based on it's name; find (query) by (start of condition) (field) (value)
+    // IT also provides implementation for save(), findById(), delete() etc.
+    // it also implements this method based on it's name; find (query) by (start of condition) (field) (value)
     List<T> findByProcessedFalse();
 }
 

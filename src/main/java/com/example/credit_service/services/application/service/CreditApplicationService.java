@@ -2,7 +2,6 @@ package com.example.credit_service.services.application.service;
 
 import com.example.credit_service.common.event.ApplicationEvent;
 import com.example.credit_service.common.event.EventType;
-import com.example.credit_service.event.OutboxEvent;
 import com.example.credit_service.services.application.model.ApplicationOutbox;
 import com.example.credit_service.services.application.model.CustomerApplication;
 import com.example.credit_service.common.dto.CreditRequest;
@@ -10,7 +9,6 @@ import com.example.credit_service.common.dto.CreditResponse;
 import com.example.credit_service.common.exception.ApplicationNotFoundException;
 import com.example.credit_service.services.application.repository.ApplicationEventRepo;
 import com.example.credit_service.services.application.repository.ApplicationRepo;
-import com.example.credit_service.event.EventRepo;
 import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;

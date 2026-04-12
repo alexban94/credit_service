@@ -1,7 +1,6 @@
 package com.example.credit_service.services.application.model;
 
 import com.example.credit_service.event.OutboxEvent;
-import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
