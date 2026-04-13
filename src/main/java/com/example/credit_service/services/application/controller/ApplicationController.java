@@ -2,7 +2,7 @@ package com.example.credit_service.services.application.controller;
 
 import com.example.credit_service.common.dto.CreditRequest;
 import com.example.credit_service.common.dto.CreditResponse;
-import com.example.credit_service.services.application.service.CreditApplicationService;
+import com.example.credit_service.services.application.service.ApplicationService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
  Also makes it a Spring managed @Bean */
 @RestController //This is an API not a website, so it  returns JSON data instead of a HTML page (view).
 @RequestMapping("/applications") //Base path for all endpoints in this controller, groups related endpoints.
-public class CreditApplicationController {
+public class ApplicationController {
 
-    private final CreditApplicationService service;
+    private final ApplicationService service;
 
-    public CreditApplicationController(CreditApplicationService service){
+    public ApplicationController(ApplicationService service){
         //Dependency Injection. Spring finds a CreditApplicationService bean and calls this instructor, injecting the dependency.
         this.service = service;
     }

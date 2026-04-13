@@ -1,7 +1,9 @@
 package com.example.credit_service.services.application.service;
 
 import com.example.credit_service.common.event.ApplicationEvent;
+import com.example.credit_service.common.event.DecisionEvent;
 import com.example.credit_service.common.event.EventType;
+import com.example.credit_service.common.event.RiskEvent;
 import com.example.credit_service.services.application.model.ApplicationOutbox;
 import com.example.credit_service.services.application.model.CustomerApplication;
 import com.example.credit_service.common.dto.CreditRequest;
@@ -18,14 +20,14 @@ import java.util.UUID;
 
 // Co-ordinates everything but doesn't deal directly with the HTTP request/security.
 @Service
-public class CreditApplicationService {
+public class ApplicationService {
 
     private final ApplicationRepo appRepo;
     private final ApplicationEventRepo eventRepo;
     private final ObjectMapper objectMapper;
 
     //Dependency Injection of shared objects.
-    public CreditApplicationService(ApplicationRepo appRepo, ApplicationEventRepo eventRepo, ObjectMapper objectMapper){
+    public ApplicationService(ApplicationRepo appRepo, ApplicationEventRepo eventRepo, ObjectMapper objectMapper){
         this.appRepo = appRepo;
         this.eventRepo = eventRepo;
         this.objectMapper = objectMapper;
@@ -44,14 +46,12 @@ public class CreditApplicationService {
         CustomerApplication saved = appRepo.save(app);
         // Create a new event - immutable business fact that the application has been saved.
         ApplicationEvent event = new ApplicationEvent(
-                UUID.randomUUID(),
                 saved.getId(),
                 saved.getFirstName(),
                 saved.getLastName(),
                 saved.getEmployer(),
                 saved.getAnnualIncome(),
-                saved.getRequestAmount(),
-                EventType.NEW_APPLICATION.name()
+                saved.getRequestAmount()
                 );
         String json = objectMapper.writeValueAsString(event); //convert event to json for mongoDB.
         ApplicationOutbox outbox = new ApplicationOutbox(UUID.randomUUID(), EventType.NEW_APPLICATION.name(),
@@ -73,5 +73,15 @@ public class CreditApplicationService {
         //If application is found then return it.
         return new CreditResponse(app.getId(), app.getDecision(), app.getRiskScore());
 
+    }
+
+    public void updateRisk(RiskEvent event){
+        // Update customer application in database, check if application is complete. If so emit event.
+        // TODO: implementation and send kafka message.
+    }
+
+    public void updateDecision(DecisionEvent event){
+        // Update decision in customer application.
+        // TODO: implementation and send kafka maessage.
     }
 }

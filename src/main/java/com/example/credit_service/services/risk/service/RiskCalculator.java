@@ -1,4 +1,4 @@
-package com.example.credit_service.services.risk;
+package com.example.credit_service.services.risk.service;
 
 import org.springframework.stereotype.Component;
 

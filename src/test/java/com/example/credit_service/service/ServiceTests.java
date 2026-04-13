@@ -1,13 +1,13 @@
 package com.example.credit_service.service;
 
-import com.example.credit_service.services.application.service.CreditApplicationService;
+import com.example.credit_service.services.application.service.ApplicationService;
 import com.example.credit_service.common.dto.CreditRequest;
 import com.example.credit_service.common.dto.CreditResponse;
 import com.example.credit_service.common.exception.ApplicationNotFoundException;
 import com.example.credit_service.services.application.model.CustomerApplication;
 import com.example.credit_service.services.application.repository.ApplicationRepo;
 import com.example.credit_service.event.EventRepo;
-import com.example.credit_service.services.risk.RiskCalculator;
+import com.example.credit_service.services.risk.service.RiskCalculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,7 +38,7 @@ public class ServiceTests {
 
     // Create a real service object and inject the mocks into it.
     @InjectMocks
-    private CreditApplicationService service;
+    private ApplicationService service;
 
     @Test
     void shouldApproveApplication(){
@@ -106,7 +106,7 @@ public class ServiceTests {
     @Test
     void shouldGetApplication(){
         //Test for a valid application that exists in the database.
-        CustomerApplication app = new CustomerApplication("TestID", "Pasta", "Bake", "FFXIV", 10000, 50000, 80, "APPROVED");
+        CustomerApplication app = new CustomerApplication("TestID", "Pasta", "Bake", "FFXIV", 10000, 50000, 80, "APPROVED", false, false);
 
         when(appRepo.findById("TestID")).thenReturn(Optional.of(app));
 
