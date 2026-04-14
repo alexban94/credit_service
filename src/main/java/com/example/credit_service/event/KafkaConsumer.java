@@ -2,7 +2,7 @@ package com.example.credit_service.event;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 //Generic Kafka consumer class that listens to topics and receives raw kafka messages.
 // Passes them onto EventRouter.

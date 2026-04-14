@@ -22,7 +22,7 @@ class SecurityConfig {
     // DI again, Spring will look in the ApplicationContext when it tries to create the bean and provide a HttpSecurity
     // object automatically as it's a complex class that needs wiring. The class is a Builder for the SecurityFilterChain.
     @Bean
-    SecurityFilterChain filter(HttpSecurity http){
+    SecurityFilterChain filter(HttpSecurity http) throws Exception{ //TODO: Review this code again.
         // Start configuration.
         http.csrf(crsf -> crsf.disable()) // Cross-site Request Forgery protection. disable as it's a REST API not using sessions or cookeis.
             .authorizeHttpRequests(auth -> auth.anyRequest().authenticated()) //Every HTTP request must be authenticated. No anonymous access.

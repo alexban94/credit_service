@@ -4,6 +4,7 @@ import com.example.credit_service.common.event.ApplicationEvent;
 import com.example.credit_service.common.event.DecisionEvent;
 import com.example.credit_service.common.event.EventType;
 import com.example.credit_service.common.event.RiskEvent;
+import com.example.credit_service.common.util.JsonUtil;
 import com.example.credit_service.services.application.model.ApplicationOutbox;
 import com.example.credit_service.services.application.model.CustomerApplication;
 import com.example.credit_service.common.dto.CreditRequest;
@@ -11,9 +12,8 @@ import com.example.credit_service.common.dto.CreditResponse;
 import com.example.credit_service.common.exception.ApplicationNotFoundException;
 import com.example.credit_service.services.application.repository.ApplicationEventRepo;
 import com.example.credit_service.services.application.repository.ApplicationRepo;
-import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Service;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -24,17 +24,17 @@ public class ApplicationService {
 
     private final ApplicationRepo appRepo;
     private final ApplicationEventRepo eventRepo;
-    private final ObjectMapper objectMapper;
+    private final JsonUtil jsonUtil;
 
     //Dependency Injection of shared objects.
-    public ApplicationService(ApplicationRepo appRepo, ApplicationEventRepo eventRepo, ObjectMapper objectMapper){
+    public ApplicationService(ApplicationRepo appRepo, ApplicationEventRepo eventRepo, JsonUtil jsonUtil){
         this.appRepo = appRepo;
         this.eventRepo = eventRepo;
-        this.objectMapper = objectMapper;
+        this.jsonUtil = jsonUtil;
     }
 
     //Called from the CreditApplicationController (REST API) to handle logic
-    public CreditResponse submitApplication(@NonNull CreditRequest request) {
+    public CreditResponse submitApplication(CreditRequest request) {
 
         //ID is null as it will be created by MongoDB later. Create application model object.
         CustomerApplication app = new CustomerApplication(null, request.firstName(), request.lastName(),
@@ -53,7 +53,7 @@ public class ApplicationService {
                 saved.getAnnualIncome(),
                 saved.getRequestAmount()
                 );
-        String json = objectMapper.writeValueAsString(event); //convert event to json for mongoDB.
+        String json = jsonUtil.toJson(event); //convert event to json for mongoDB.
         ApplicationOutbox outbox = new ApplicationOutbox(UUID.randomUUID(), EventType.NEW_APPLICATION.name(),
                 json, event.appID() ,Instant.now(), false); // create outbox event for mongoDB. the record is the data/payload, this class is a 'wrapper' for it.
         eventRepo.save(outbox); // save it to the event repo.

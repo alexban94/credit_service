@@ -1,8 +1,14 @@
 spring:
-  kafka:
-    bootstrap-servers: localhost:9092
-    topics:
-      application: application-events
-      risk: risk-events
-      fraud: fraud-events
-      decision: decision-events
+
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topics:
+    application: application-events
+    risk: risk-events
+    fraud: fraud-events
+    decision: decision-events
+  consumer: # for start up test errors
+    group-id: test-group
+  listener:
+    auto-startup: false

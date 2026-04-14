@@ -1,9 +1,9 @@
 package com.example.credit_service.event;
 
+import com.example.credit_service.common.util.JsonUtil;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import tools.jackson.databind.ObjectMapper;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 
 //TODO: set up Kafka/MongoDB in Docker. Write JUnit tests to see if it works as intended.
@@ -18,13 +18,13 @@ public class KafkaPublisher<T extends OutboxEvent> {
     private final EventRepo<T> repo;
     private final String topic;
     private final KafkaTemplate<String, String> kafka;
-    private final ObjectMapper objectMapper;
+    private final JsonUtil jsonUtil;
 
-    public KafkaPublisher(EventRepo<T> repo, KafkaTemplate<String, String> kafka, String topic, ObjectMapper objectMapper){
+    public KafkaPublisher(EventRepo<T> repo, KafkaTemplate<String, String> kafka, String topic, JsonUtil jsonUtil){
         this.repo = repo;
         this.topic = topic;
         this.kafka = kafka;
-        this.objectMapper = objectMapper;
+        this.jsonUtil = jsonUtil;
     }
     // Delay of 5 seconds after the previous execution completes.
     @Scheduled(fixedDelay = 5000)
@@ -35,7 +35,7 @@ public class KafkaPublisher<T extends OutboxEvent> {
         for(T event: events) {
 
             // published on the topic "credit-application-events"
-            kafka.send(topic, event.getAppID(), objectMapper.writeValueAsString(event));
+            kafka.send(topic, event.getAppID(), jsonUtil.toJson(event));
             event.setProcessed(true); // event now published.
 
             // save event again.

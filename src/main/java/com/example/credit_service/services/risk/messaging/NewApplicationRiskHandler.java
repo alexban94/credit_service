@@ -8,7 +8,7 @@ import com.example.credit_service.event.OutboxEvent;
 import com.example.credit_service.services.application.service.ApplicationService;
 import com.example.credit_service.services.risk.service.RiskService;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class NewApplicationRiskHandler implements EventHandler {
