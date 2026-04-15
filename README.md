@@ -1,5 +1,3 @@
-# Event-Driven Credit Service
-
 ## Overview
 Backend project simulating a credit system that processes applications using an **event-driven architecture**.  Uses an implementation of the transactional outbox design pattern to save events to an outbox collection to ensure they are not lost. Events are received by a consumer, passed to a router which determines which specific handler to use based on the event type; the handler calls the relevant service to perform the business logic.
 
