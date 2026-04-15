@@ -1,7 +1,7 @@
 ## Overview
-Backend project simulating a credit system that processes applications using an **event-driven architecture**.  Uses an implementation of the transactional outbox design pattern to save events to an outbox collection to ensure they are not lost. Events are received by a consumer, passed to a router which determines which specific handler to use based on the event type; the handler calls the relevant service to perform the business logic.
+Backend project simulating a credit system that processes applications using an event-driven architecture.  Uses an implementation of the transactional outbox design pattern to save events to an outbox collection to ensure they are not lost. Events are received by a consumer, passed to a router which determines which specific handler to use based on the event type; the handler calls the relevant service to perform the business logic.
 
-Currently built as a **modular monolith**, but designed so each module has loose or no coupling and can be easily extracted into microservices later.
+Currently built as a modular monolith, but designed so each module has loose or no coupling and can be easily extracted into microservices later.
 
 ## How it works
 1. User submits a credit application via REST API  
