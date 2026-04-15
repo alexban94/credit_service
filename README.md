@@ -32,11 +32,6 @@ Currently built as a **modular monolith**, but designed so each module has loose
 - Jackson  
 - JUnit / Mockito  
 
-## Key ideas
-- Outbox pattern for reliable events  
-- Consumer → Router → Handler pattern  
-- Eventual consistency (async updates)  
-
 ## TODO: 
 - Adding retries / DLQ / ensure idempotency.
 - Frontend visualisation of event flow
